@@ -9,3 +9,6 @@ kafka_group: kafka
 
 kafka_root_dir: /usr/lib
 kafka_dir: "{{ kafka_root_dir }}/kafka"
+
+# kafka broker list 
+kafka_broker_list: [1001, 1002, 1003]
