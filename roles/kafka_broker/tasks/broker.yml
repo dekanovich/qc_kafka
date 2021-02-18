@@ -105,7 +105,7 @@
         - kafka_config
 
 
-    - name: Other configuration files to proper location
+    - name: Create sysctl for the Kafka services
       copy:
         src: sysctl.files/kafka@.service
         dest: '/etc/systemd/system/kafka@.service'
