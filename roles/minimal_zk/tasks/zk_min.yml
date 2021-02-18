@@ -49,6 +49,12 @@
       tags:
         - kafka_dirs
 
+    - name: Dirty hack here -- I am changing the logs dir owner so ZK can start
+      file: 
+        path: '{{ kafka_dir }}/bin/../logs/'
+        group: '{{ kafka_group }}'
+        owner: '{{ kafka_user }}'  
+
     - name: Creating sysctl service file from file
       copy:
         src: sysctl.files/zookeeper-server.service
