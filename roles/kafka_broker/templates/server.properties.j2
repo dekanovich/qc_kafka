@@ -11,7 +11,7 @@ log.message.format.version=2.3
 
 # default: -1
 # Each broker is uniquely identified by a non-negative integer id. This id serves as the broker's "name" and allows the broker to be moved to a different host/port without confusing consumers. You can choose any number you like so long as it is unique.
-broker.id=1001
+broker.id={{ item }}
 
 # default: null
 # Rack of the broker. This will be used in rack aware replication assignment for fault tolerance. Examples: `RACK1`, `us-east-1d`
@@ -29,7 +29,7 @@ zookeeper.connect=127.0.0.1:2181
 
 # default: /tmp/kafka-logs
 # A comma-separated list of one or more directories in which Kafka data is stored. Each new partition that is created will be placed in the directory which currently has the fewest partitions.
-log.dirs=/var/lib/kafka1001
+log.dirs=/var/lib/kafka_{{ item }}
 
 # default: 9092
 # The port on which the server accepts client connections.

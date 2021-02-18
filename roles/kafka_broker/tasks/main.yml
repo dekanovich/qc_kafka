@@ -1,2 +1,5 @@
+- name: Install prerequisites 
+  import_tasks: prereqs.yml
+
 - name: Install kafka broker
   import_tasks: broker.yml

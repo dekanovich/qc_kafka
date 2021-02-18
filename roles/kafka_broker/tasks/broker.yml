@@ -61,12 +61,45 @@
 
     - name: Create directory for symlink to kafka configuration files
       file:
-        path: /etc/kafka_{{ item }}
+        path: /etc/kafka_{{ item }}/config
         state: directory
         group: '{{ kafka_group }}'
         owner: '{{ kafka_user }}'
       loop: "{{ kafka_broker_list }}"
       tags:
         - kafka_dirs
+
+
+    - name: Template configuration file to server.properties
+      template:
+        src: server.properties.j2
+        dest: '/etc/kafka_{{ item }}/config/server.properties'
+      loop: "{{ kafka_broker_list }}"
+      tags:
+        - kafka_config
+
+    - name: Other configuration files to proper location
+      copy:
+        src: config.files/
+        dest: '/etc/kafka_{{ item }}/config/'
+      loop: "{{ kafka_broker_list }}"
+      tags:
+        - kafka_config
+
+
+    - name: Other configuration files to proper location
+      copy:
+        src: sysctl.files/kafka@.service
+        dest: '/etc/systemd/system/kafka@.service'
+      tags:
+        - kafka_sysctl
+
+    - name: Enable the service for all bokers 
+      ansible.builtin.service:
+        name: kafka@{{item}}
+        state: started
+      loop: "{{ kafka_broker_list }}"
+      tags:
+        - kafka_sysctl
 
 

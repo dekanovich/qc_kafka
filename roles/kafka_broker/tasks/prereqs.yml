@@ -1,0 +1,4 @@
+- name: Install latest version of "openjdk-8-jdk"
+  apt:
+    name: openjdk-6-jdk
+    state: latest
