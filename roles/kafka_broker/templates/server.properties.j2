@@ -49,11 +49,11 @@ num.io.threads=2
 
 # default: null
 # Listener List - Comma-separated list of URIs we will listen on and their protocols. Specify hostname as 0.0.0.0 to bind to all interfaces. Leave hostname empty to bind to default interface. Examples of legal listener lists: PLAINTEXT://myhost:9092,TRACE://:9091 PLAINTEXT://0.0.0.0:9092, TRACE://localhost:9093
-listeners=PLAINTEXT://0.0.0.0:9092,SSL://0.0.0.0:9093
+listeners=PLAINTEXT://0.0.0.0:{{ 9090 + index_var * 2 }},SSL://0.0.0.0:{{ 9090 + index_var * 2 + 1 }}
 
 # default: null
 # Listeners to publish to ZooKeeper for clients to use, if different than the listeners above. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, the value for `listeners` will be used.
-# advertised.listeners=PLAINTEXT://10.236.30.57:9092,SSL://10.236.30.57:9093
+advertised.listeners=PLAINTEXT://{{ ansible_default_ipv4.address }}:{{ 9090 + index_var * 2 }},SSL://{{ ansible_default_ipv4.address }}:{{ 9090 + index_var * 2 + 1 }}
 
 
 # default: 100 * 1024

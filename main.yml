@@ -2,4 +2,4 @@
 - hosts: localhost
   roles:
      - kafka_broker
-     - minimal_zk
+#     - minimal_zk

@@ -51,7 +51,7 @@
 
     - name: Create directory for kafka data files
       file:
-        path: /var/lib/kafka_{{ item }}
+        path: /var/lib/kafka{{ item }}
         state: directory
         group: '{{ kafka_group }}'
         owner: '{{ kafka_user }}'
@@ -84,6 +84,8 @@
         src: server.properties.j2
         dest: '/etc/kafka_{{ item }}/config/server.properties'
       loop: "{{ kafka_broker_list }}"
+      loop_control:
+        index_var: index_var
       tags:
         - kafka_config
 
