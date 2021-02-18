@@ -1,0 +1,5 @@
+- name: Install prerequisites 
+  import_tasks: prereqs.yml
+
+- name: Run minimal ZK
+  import_tasks: zk_min.yml

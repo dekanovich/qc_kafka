@@ -49,6 +49,16 @@
       tags:
         - kafka_dirs
 
+    - name: Create directory for kafka data files
+      file:
+        path: /var/lib/kafka_{{ item }}
+        state: directory
+        group: '{{ kafka_group }}'
+        owner: '{{ kafka_user }}'
+      loop: "{{ kafka_broker_list }}"
+      tags:
+        - kafka_dirs
+
     - name: Create directory for kafka log files
       file:
         path: /var/log/kafka_{{ item }}
@@ -69,7 +79,6 @@
       tags:
         - kafka_dirs
 
-
     - name: Template configuration file to server.properties
       template:
         src: server.properties.j2
@@ -77,6 +86,15 @@
       loop: "{{ kafka_broker_list }}"
       tags:
         - kafka_config
+
+    - name: Template environment file to /etc/default/kafka_<broker_id>
+      template:
+        src: env.file.j2
+        dest: '/etc/default/kafka_{{ item }}'
+      loop: "{{ kafka_broker_list }}"
+      tags:
+        - kafka_config
+
 
     - name: Other configuration files to proper location
       copy:
@@ -98,6 +116,7 @@
       ansible.builtin.service:
         name: kafka@{{item}}
         state: started
+        enabled: yes
       loop: "{{ kafka_broker_list }}"
       tags:
         - kafka_sysctl
